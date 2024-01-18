@@ -4,6 +4,8 @@
     "start": "npx parcel src/index.html"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
+    "buffer": "^6.0.3",
     "parcel": "^2.11.0"
   }
 }
