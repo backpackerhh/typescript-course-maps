@@ -1,5 +1,7 @@
 /// <reference types="@types/google.maps" />
 
+import { Mappable } from "./Mappable";
+
 export class CustomMap {
   map!: google.maps.Map;
 
@@ -22,6 +24,21 @@ export class CustomMap {
         lng: 0,
       },
       zoom: 2,
+      mapId: "TS-Course-Map",
+    });
+  }
+
+  async addMarker(mappable: Mappable) {
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary("marker")) as google.maps.MarkerLibrary;
+    const { InfoWindow } = (await google.maps.importLibrary("maps")) as google.maps.MapsLibrary;
+    const marker = new AdvancedMarkerElement({ map: this.map, position: mappable.mappableData.location });
+
+    marker.addListener("click", (e: PointerEvent) => {
+      const infoWindow = new InfoWindow({
+        content: mappable.mappableData.markerContent(),
+      });
+
+      infoWindow.open(this.map, marker);
     });
   }
 }
